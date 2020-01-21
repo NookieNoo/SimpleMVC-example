@@ -8,7 +8,7 @@ namespace application\models;
 class Article extends \ItForFree\SimpleMVC\mvc\Model
 {
     /**
-     * Название таблицы подкатегорий
+     * Название таблицы статей
      */
     public $tableName = 'articles';
     
