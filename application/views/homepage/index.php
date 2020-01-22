@@ -1,3 +1,4 @@
+<p>ttt</p>
 <ul id="headlines">
 <?php foreach ($results['articles'] as $article) { ?>
     <li class='<?php echo $article->id?>'>

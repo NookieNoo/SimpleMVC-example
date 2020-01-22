@@ -15,12 +15,7 @@ class Article extends \ItForFree\SimpleMVC\mvc\Model
     /**
      * @var string Критерий сортировки строк таблицы
      */
-    public $orderBy = 'timestamp DESC';
-    
-    /**
-     * @var int ID статьи 
-     */
-    public $id = null;
+    public $orderBy = 'publicationDate DESC';
     
     /**
      * @var int дата публикации
@@ -97,87 +92,6 @@ class Article extends \ItForFree\SimpleMVC\mvc\Model
         $st->bindValue( ":summary", $this->summary, \PDO::PARAM_STR );
         $st->bindValue( ":content", $this->content, \PDO::PARAM_STR );
         $st->bindValue( ":publicationStatus", $this->publicationStatus, \PDO::PARAM_INT );
-        $st->execute();
-    }
-    
-    /**
-    * Возвращаем объект статьи соответствующий заданному ID статьи
-    *
-    * @param int ID статьи
-    * @return Article|false Объект статьи или false, если запись не найдена или возникли проблемы
-    */
-    public function getById($id)
-    {
-        $sql = "SELECT * FROM $this->tableName WHERE id = :id";
-        $st = $this->pdo->prepare($sql);
-        $st->bindValue(":id", $this->id, \PDO::PARAM_INT);
-        $st->execute();
-    }
-    
-    /**
-    * Возвращает все (или диапазон) объекты Article из базы данных
-    *
-    * @param int $numRows Количество возвращаемых строк (по умолчанию = 1000000)
-    * @param int $categoryId Вернуть статьи только из категории с указанным ID
-    * @param string $order Столбец, по которому выполняется сортировка статей (по умолчанию = "publicationDate DESC")
-    * @param string $publicationFilter Столбец со статусом видимости статьи (по умолчанию = не используется)
-    * @param int $subCategoryId Вернуть статьи только из подкатегории с указанным ID 
-    * @return Array|false Двух элементный массив: results => массив объектов Article; totalRows => общее количество строк
-    */
-    public static function getList($numRows=1000000, $categoryId=null,
-            $order="publicationDate DESC", $publicationFilter = "",
-            $subCategoryId=null) 
-    {
-        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $categoryClause = $categoryId ? "WHERE categoryId = :categoryId" : "";
-        $subCategoryClause = $subCategory_id ? "WHERE subCategory_id = :subCategoryId" : "";
-        
-        $sql = "SELECT SQL_CALC_FOUND_ROWS * 
-                FROM $this->tableName $categoryClause"."$subCategoryClause".$publicationFilter."
-                ORDER BY  $order  LIMIT :numRows";
-
-        $st = $conn->prepare($sql);
-        
-        $st->bindValue(":numRows", $numRows, PDO::PARAM_INT);
-        
-        if (isset($categoryId)) {
-            $st->bindValue( ":categoryId", $categoryId, PDO::PARAM_INT);
-        }
-        
-        if (isset($subCategory_id)) {
-            $st->bindValue( ":subCategoryId", $subCategory_id, PDO::PARAM_INT);
-        }
-        $st->execute(); 
-        
-        
-        $list = array();
-        
-        while ($row = $st->fetch()) {
-            $article = new Article($row);
-            // Вырезаем 50 символов и добавляем ...
-            $article->newSummary = mb_substr($article->summary, 0, 50)."...";
-            $list[] = $article;
-        }
-
-        // Получаем общее количество статей, которые соответствуют критерию
-        $sql = "SELECT FOUND_ROWS() AS totalRows";
-        $totalRows = $conn->query($sql)->fetch();
-        $conn = null;
-        
-        return (array(
-            "results" => $list, 
-            "totalRows" => $totalRows[0]
-            ) 
-        );
-    }
-    
-    /**
-    * Удаляем текущий объект статьи из базы данных
-    */
-    public function delete()
-    {
-        $sql = "DELETE FROM $this->tableName WHERE id = :id LIMIT 1";
-        $st = $this->pdo->prepare($sql);
         $st->bindValue( ":id", $this->id, \PDO::PARAM_INT );
         $st->execute();
     }

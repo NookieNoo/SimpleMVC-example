@@ -13,10 +13,6 @@ Class Category extends \ItForFree\SimpleMVC\mvc\Model
     public $tableName = 'categories';
     
     /**
-     * @var int ID категории
-     */
-    public $id;
-    /**
      * @var string название категории 
      */
     public $name;
@@ -51,6 +47,7 @@ Class Category extends \ItForFree\SimpleMVC\mvc\Model
         $st = $this->pdo->prepare($sql);
         $st->bindValue( ":name", $this->name, \PDO::PARAM_STR );
         $st->bindValue( ":description", $this->description, \PDO::PARAM_STR );
+        $st->bindValue( ":id", $this->id, \PDO::PARAM_INT );
         $st->execute();
     }
 }

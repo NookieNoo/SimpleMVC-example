@@ -13,10 +13,6 @@ Class SubCategory extends \ItForFree\SimpleMVC\mvc\Model
     public $tableName = 'subCategories';
     
     /**
-     * @var int ID подкатегории
-     */
-    public $id;
-    /**
      * @var string название подкатегории 
      */
     public $name;
@@ -51,6 +47,7 @@ Class SubCategory extends \ItForFree\SimpleMVC\mvc\Model
         $st = $this->pdo->prepare($sql);
         $st->bindValue( ":name", $this->name, \PDO::PARAM_STR );
         $st->bindValue( ":description", $this->description, \PDO::PARAM_STR );
+        $st->bindValue( ":id", $this->id, \PDO::PARAM_INT );
         $st->execute();
     }
 }
