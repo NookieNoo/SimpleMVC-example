@@ -1,6 +1,6 @@
 <?php
 namespace application\controllers;
-use application\models\Article as Article;
+use \application\models\Article as Article;
 class HomepageController extends \ItForFree\SimpleMVC\mvc\Controller
 {
     /**
@@ -17,11 +17,12 @@ class HomepageController extends \ItForFree\SimpleMVC\mvc\Controller
     public function indexAction()
     {
         $article = new Article();
-        $list = array();
-        $list = $article->getList();
+        $articles = array();
+        $articles = $article->getList();
         
         
         $this->view->addVar('homepageTitle', $this->homepageTitle); // передаём переменную по view
+        $this->view->addVar('articles', $articles); // передаём переменную по view
         $this->view->render('homepage/index.php');
     }
     

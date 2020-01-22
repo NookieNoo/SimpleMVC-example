@@ -5,16 +5,33 @@ use \application\models\Article as Article;
 /*
  * 
  */
-class ArticleController extends \ItForFree\SimpleMVC\mvc\Controller
+class ArticlesController extends \ItForFree\SimpleMVC\mvc\Controller
 {
-    public $layoutPath = '';
-    
+    public $layoutPath = 'main.php';
+    /**
+    *   Выводит список всех статей
+    */
     public function indexAction()
     {
         $article = new Article();
-        $list = array();
+        $articles = array();
+        $articles = $article->getList();
         
-        $list = $article->getList();
+        $this->view->addVar('articles', $articles); // передаём переменную по view
         $this->view->render('');
+    }
+    
+    /**
+    *   Вывод информации о статье
+    */
+    public function viewItemAction()
+    {
+        $id = $_GET['id'];
+        $article = new Article;
+        $viewArticle = $article->getById($id, $article->tableName);
+        
+        $this->view->addVar('articles', $viewArticle); // передаём переменную по view
+        $this->view->render('article/view-item.php');
+        
     }
 }
