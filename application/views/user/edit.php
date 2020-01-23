@@ -4,18 +4,12 @@ use ItForFree\SimpleMVC\Config;
 $Url = Config::getObject('core.url.class');
 $User = Config::getObject('core.user.class');
 ?>
+<a href="#">
+    <img id="logo" src="../../../images/logo.jpg" alt="Widget News">
+</a>
 
-<?php include('includes/admin-users-nav.php'); ?>
 
-
-<h2><?= $editAdminusersTitle ?>
-    <span>
-        <?= $User->returnIfAllowed("admin/adminusers/delete", 
-            "<a href=" . $Url::link("admin/adminusers/delete&id=" . $_GET['id']) 
-            . ">[Удалить]</a>");?>
-    </span>
-</h2>
-
+<h2><?= $editAdminusersTitle ?></h2>
 <form id="editUser" method="post" action="<?= $Url::link("admin/adminusers/edit&id=" . $_GET['id'])?>">
     <h5>Введите имя пользователя</h5>
     <input type="text" name="login" placeholder="логин пользователя" value="<?= $viewAdminusers->login ?>"><br>
@@ -29,7 +23,18 @@ $User = Config::getObject('core.user.class');
         <option value="admin">Администратор</option>
     </select><br>
     
+        <label for="activityStatus"><h5>Статус активности пользователя</h5></label><br>
+        <input type="checkbox" name="activityStatus"
+            <?php if ($viewAdminusers->activityStatus) echo 'checked' ?>
+            <?php if ($viewAdminusers->role == 'admin') echo 'disabled' ?> 
+        ><br>
+          
     <input type="hidden" name="id" value="<?= $_GET['id']; ?>">
     <input type="submit" name="saveChanges" value="Сохранить">
     <input type="submit" name="cancel" value="Назад">
 </form>
+<span>
+        <?= $User->returnIfAllowed("admin/adminusers/delete", 
+            "<a href=" . $Url::link("admin/adminusers/delete&id=" . $_GET['id']) 
+            . ">Удалить этого пользователя</a>");?>
+</span>

@@ -95,5 +95,45 @@ class Article extends \ItForFree\SimpleMVC\mvc\Model
         $st->bindValue( ":id", $this->id, \PDO::PARAM_INT );
         $st->execute();
     }
+    /**
+    * Возвращает название категории статьи, по id этой категории
+    */
+    public function getCategoryNameById($id)
+    {
+        $sql = "SELECT name FROM categories WHERE id=:id";
+        $st = $this->pdo->prepare($sql);
+        $st->bindValue( ":id", $id, \PDO::PARAM_INT );
+        $st->execute();
+        $row = $st->fetch(\PDO::FETCH_NUM); 
+        
+        
+        
+        if ($row) { 
+            $categoryName = $row[0];
+            return $categoryName;
+        } else {
+            return null;
+        }
+    }
+    /**
+    * Возвращает название подкатегории статьи, по id этой подкатегории
+    */
+    public function getSubCategoryNameById($id)
+    {
+        $sql = "SELECT name FROM subCategories WHERE id=:id";
+        $st = $this->pdo->prepare($sql);
+        $st->bindValue( ":id", $id, \PDO::PARAM_INT );
+        $st->execute();
+        $row = $st->fetch(\PDO::FETCH_NUM); 
+        
+        
+        
+        if ($row) { 
+            $subCategoryName = $row[0];
+            return $subCategoryName;
+        } else {
+            return null;
+        }
+    }
 }
 

@@ -18,11 +18,18 @@ class HomepageController extends \ItForFree\SimpleMVC\mvc\Controller
     {
         $article = new Article();
         $articles = array();
+        $listCategoryName = array();
         $articles = $article->getList();
+        foreach ($articles['results'] as $article2){
+           $listCategoryName[] = $article->getCategoryNameById($article2->categoryId);
+           $listSubCategoryName[] = $article->getSubCategoryNameById($article2->subCategoryId);
+        }
         
         
         $this->view->addVar('homepageTitle', $this->homepageTitle); // передаём переменную по view
         $this->view->addVar('articles', $articles); // передаём переменную по view
+        $this->view->addVar('listCategoryName', $listCategoryName);
+        $this->view->addVar('listSubCategoryName', $listSubCategoryName);
         $this->view->render('homepage/index.php');
     }
     

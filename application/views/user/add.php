@@ -1,29 +1,46 @@
-<?php include('includes/admin-users-nav.php'); ?>
+<a href="#">
+    <img id="logo" src="../../../images/logo.jpg" alt="Widget News">
+</a>
+<?php include('includes/admin-header.php'); ?>
+
 <h2><?= $addAdminusersTitle ?></h2>
 
 <form id="addUser" method="post" action="<?= \ItForFree\SimpleMVC\Url::link("admin/adminusers/add")?>"> 
 
-    <div class="form-group">
-        <label for="login">Введите имя пользователя</label>
-        <input type="text" class="form-control" name="login" id="login" placeholder="имя пользователя">
-    </div>
-    <div class="form-group">
-        <label for="pass">Введите пароль</label>
-        <input type="text" class="form-control"  name="pass" id="pass" placeholder="пароль">
-    </div>
-    <div class="form-group">   
-        <label for="role">Права доступа</label>
-        <select name="role" id="role" class="form-control"> 
+    <ul>
+        <li>
+          <label for="username">Username</label>
+          <textarea name="login" id="username" placeholder="Your username" required maxlength="100000" style="height: 2.5em;"></textarea>
+        </li>
+
+        <li>
+          <label for="password">Password</label>
+          <input type="password" name="pass" id="password" placeholder="Your password" required maxlength="100000" style="height: 2.5em;">
+        </li>
+        
+        <li>
+          <label for="e-mail">Введите e-mail</label>
+          <textarea name="email" id="e-mail" placeholder="Your e-mail" required maxlength="100000" style="height: 2.5em;"></textarea>
+        </li>
+
+        <li>
+          <label for="role">Права доступа</label>
+          <select name="role" id="role"> 
             <option value="admin">Администратор</option>
             <option value="auth_user">Зарегистрированный пользователь</option>
-        </select>
+          </select>  
+        </li>
+        
+        <li>
+          <label for="activityStatus">Status</label>
+          <input type="checkbox" name="activityStatus">
+        </li>
+    </ul>
+
+    <div class="buttons">
+      <input type="submit" name="saveNewUser" value="Сохранить" />
+      <input type="submit" formnovalidate name="cancel" value="Назад" />
     </div>
-    <div class="form-group">
-        <label for="email">Введите e-mail </label>
-        <input type="text" class="form-control"  name="email" id="email" placeholder="адрес электропочты">
-    </div>
-    <input type="submit" class="btn btn-primary" name="saveNewUser" value="Сохранить">
-    <input type="submit" class="btn" name="cancel" value="Назад">
 </form>
 
 

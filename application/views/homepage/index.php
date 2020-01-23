@@ -1,5 +1,6 @@
 <ul id="headlines">
-    <?php foreach($articles['results'] as $article) { ?>
+    
+    <?php $count=0; foreach($articles['results'] as $article) { ?>
         <li class='<?php echo $article->id?>'>
             <h2>
                 <span class="pubDate">
@@ -7,15 +8,15 @@
                         // echo date('j F', $article->publicationDate)?>
                 </span>
                 
-                <a href=".?action=viewArticle&amp;articleId=<?php echo $article->id?>">
+                <a href=".?route=articles/viewItem&amp;id=<?php echo $article->id?>">
                     <?php echo htmlspecialchars( $article->title )?>
                 </a>
                 
-                <?php if (isset($article->categoryId)) { ?>
+                <?php if (isset($listCategoryName[$count])) { ?>
                     <span class="category">
                         in 
-                        <a href=".?action=archive&amp;categoryId=<?php echo $article->categoryId?>">
-                            <?php echo htmlspecialchars($article->categoryId)?>
+                        <a href=".?action=archive&amp;categoryId=<?php echo $listCategoryName[$count]?>">
+                            <?php echo htmlspecialchars($listCategoryName[$count])?>
                         </a>
                     </span>
                 <?php } 
@@ -25,12 +26,12 @@
                     </span>
                 <?php } ?>
                 
-                <?php if (isset($article->subCategoryId)) { ?>
+                <?php if (isset($listSubCategoryName[$count])) { ?>
                 
                 <span class="category">
                      in 
-                    <a href=".?action=archiveSubCategories&amp;subCategory_id=<?php echo $article->subCategory_id?>">
-                        <?php echo htmlspecialchars($article->subCategoryId)?>
+                    <a href=".?action=archiveSubCategories&amp;subCategory_id=<?php echo $listSubCategoryName[$count]?>">
+                        <?php echo htmlspecialchars($listSubCategoryName[$count])?>
                     </a>
                 </span>
                 
@@ -46,9 +47,11 @@
                 <li><a href=".?action=viewArticle&amp;articleId=<?php echo $article->id?>" class="newAjaxArticleBodyByPost" data-contentId="<?php echo $article->id?>">(POST) -- NEW</a></li>
                 <li><a href=".?action=viewArticle&amp;articleId=<?php echo $article->id?>" class="newAjaxArticleBodyByGet" data-contentId="<?php echo $article->id?>">(GET)  -- NEW</a></li>
             </ul>
-            <a href=".?action=viewArticle&amp;articleId=<?php echo $article->id?>" class="showContent" data-contentId="<?php echo $article->id?>">Показать полностью</a>
+            <a href=".?route=articles/viewItem&amp;id=<?php echo $article->id?>" class="showContent" data-contentId="<?php echo $article->id?>">
+                Показать полностью
+            </a>
         </li>
-    <?php }?>
+    <?php $count++;}?>
 </ul>
 <p><a href="./?action=archive">Article Archive</a></p>
 

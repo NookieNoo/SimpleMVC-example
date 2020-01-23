@@ -18,7 +18,7 @@ class ArticlesController extends \ItForFree\SimpleMVC\mvc\Controller
         $articles = $article->getList();
         
         $this->view->addVar('articles', $articles); // передаём переменную по view
-        $this->view->render('');
+        $this->view->render('homepage/index.php');
     }
     
     /**
@@ -30,7 +30,7 @@ class ArticlesController extends \ItForFree\SimpleMVC\mvc\Controller
         $article = new Article;
         $viewArticle = $article->getById($id, $article->tableName);
         
-        $this->view->addVar('articles', $viewArticle); // передаём переменную по view
+        $this->view->addVar('article', $viewArticle); // передаём переменную по view
         $this->view->render('article/view-item.php');
         
     }

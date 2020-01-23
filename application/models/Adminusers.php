@@ -55,14 +55,18 @@ class Adminusers extends BaseExampleModel
      */
     public $role = null;
     
-
+    /**
+     * @var int 0 если не активен 1 если активен 
+     */
+    public $activityStatus = null;
     
     /**
      * Добавляем нового пользователя
      */
     public function insert()
     {
-        $sql = "INSERT INTO $this->tableName (timestamp, login, salt, pass, role, email) VALUES (:timestamp, :login, :salt, :pass, :role, :email)"; 
+        $sql = "INSERT INTO $this->tableName (timestamp, login, salt, pass, role, email, activityStatus)"
+                . " VALUES (:timestamp, :login, :salt, :pass, :role, :email, :activityStatus)"; 
         $st = $this->pdo->prepare ( $sql );
         $st->bindValue( ":timestamp", (new \DateTime('NOW'))->format('Y-m-d H:i:s'), \PDO::PARAM_STMT);
         $st->bindValue( ":login", $this->login, \PDO::PARAM_STR );
@@ -79,6 +83,7 @@ class Adminusers extends BaseExampleModel
         
         $st->bindValue( ":role", $this->role, \PDO::PARAM_STR );
         $st->bindValue( ":email", $this->email, \PDO::PARAM_STR );
+        $st->bindValue( ":activityStatus", $this->activityStatus, \PDO::PARAM_INT );
         $st->execute();
         $this->id = $this->pdo->lastInsertId();
     }
@@ -89,7 +94,8 @@ class Adminusers extends BaseExampleModel
     public function update()
     {
         if ($this->pass) {
-            $sql = "UPDATE $this->tableName SET timestamp=:timestamp, login=:login, pass=:pass, salt=:salt, role=:role, email=:email  WHERE id = :id";
+            $sql = "UPDATE $this->tableName SET timestamp=:timestamp, login=:login,"
+                    . " pass=:pass, salt=:salt, role=:role, email=:email, activityStatus=:activityStatus  WHERE id = :id";
             // Хеширование пароля
             $this->salt = rand(0,1000000);
             $st = $this->pdo->prepare ( $sql );
@@ -99,7 +105,7 @@ class Adminusers extends BaseExampleModel
             $st->bindValue( ":pass", $hashPass, \PDO::PARAM_STR );
             
         } else {
-            $sql = "UPDATE $this->tableName SET timestamp=:timestamp, login=:login, role=:role, email=:email  WHERE id = :id";
+            $sql = "UPDATE $this->tableName SET timestamp=:timestamp, login=:login, role=:role, email=:email, activityStatus=:activityStatus  WHERE id = :id";
             $st = $this->pdo->prepare ( $sql );
         }
         
@@ -109,6 +115,7 @@ class Adminusers extends BaseExampleModel
         
         $st->bindValue( ":role", $this->role, \PDO::PARAM_STR );
         $st->bindValue( ":email", $this->email, \PDO::PARAM_STR );
+        $st->bindValue( ":activityStatus", $this->activityStatus, \PDO::PARAM_INT );
         $st->bindValue( ":id", $this->id, \PDO::PARAM_INT );
         $st->execute();
     }

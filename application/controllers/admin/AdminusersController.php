@@ -10,11 +10,11 @@ class AdminusersController extends \ItForFree\SimpleMVC\mvc\Controller
 {
     
     public $layoutPath = 'admin-main.php';
-    
+    /*
     protected $rules = [ //вариант 2:  здесь всё гибче, проще развивать в дальнешем
          ['allow' => true, 'roles' => ['admin']],
          ['allow' => false, 'roles' => ['?', '@']],
-    ];
+    ];*/
     
     public function indexAction()
     {
@@ -28,22 +28,32 @@ class AdminusersController extends \ItForFree\SimpleMVC\mvc\Controller
             $this->view->render('user/view-item.php');
         } else { // выводим полный список
             
-            $users = $Adminusers->getList()['results'];
-            $this->view->addVar('users', $users);
+            $listUsers = $Adminusers->getList();
+            $this->view->addVar('users', $listUsers['results']);
+            $this->view->addVar('numberOfUsers', $listUsers['totalRows']);
             $this->view->render('user/index.php');
         }
     }
 
     /**
      * Выводит на экран форму для создания новой статьи (только для Администратора)
+     * Вывод страницы для создания нового пользователя
      */
     public function addAction()
     {
         $Url = Config::get('core.url.class');
         if (!empty($_POST)) {
             if (!empty($_POST['saveNewUser'])) {
+                //конвертируем значение статуса активности пользователя в цифру
+                if ($_POST['role']!='admin'){
+                    $_POST['activityStatus'] = (!empty($_POST['activityStatus'])) ? 1:0;
+                }
+                else {
+                    $_POST['activityStatus'] = 1;
+                }
                 $Adminusers = new Adminusers();
                 $newAdminusers = $Adminusers->loadFromArray($_POST);
+                
                 $newAdminusers->insert(); 
                 $this->redirect($Url::link("admin/adminusers/index"));
             } 
@@ -77,7 +87,7 @@ class AdminusersController extends \ItForFree\SimpleMVC\mvc\Controller
                 $this->redirect($Url::link("admin/adminusers/index&id=$id"));
             } 
             elseif (!empty($_POST['cancel'])) {
-                $this->redirect($Url::link("admin/adminusers/index&id=$id"));
+                $this->redirect($Url::link("admin/adminusers/index"));
             }
         }
         else {

@@ -9,11 +9,10 @@ $User = Config::getObject('core.user.class');
 <html>
     <?php include('includes/main/head.php'); ?>
     <body>
-        <?php include('includes/admin-main/nav.php'); ?>
-        <div class="container">
+        <div id="container">
             <?= $CONTENT_DATA ?>
+            <?php include('includes/main/footer.php'); ?>
         </div>
-        <?php include('includes/main/footer.php'); ?>
     </body>
 </html>
 
