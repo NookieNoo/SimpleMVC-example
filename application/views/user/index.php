@@ -6,6 +6,7 @@ $User = Config::getObject('core.user.class');
 <a href="#">
     <img id="logo" src="../../../images/logo.jpg" alt="Widget News">
 </a>
+<?php include('includes/admin-header.php'); ?>
 
 <h2>Список пользователей</h2> 
     

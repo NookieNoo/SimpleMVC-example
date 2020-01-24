@@ -60,9 +60,9 @@ class Article extends \ItForFree\SimpleMVC\mvc\Model
     public function insert() 
     {
         $sql = "INSERT INTO $this->tableName (publicationDate,"
-                . " categoryId, title, summary, content, active,"
-                . " subCategory_id) VALUES (:publicationDate, :categoryId,"
-                . " :subCategoryId, :title, :summary, :content, :publicationStatus)";
+                . " categoryId, title, summary, content, publicationStatus,"
+                . " subCategoryId) VALUES (:publicationDate, :categoryId,"
+                . " :title, :summary, :content, :publicationStatus, :subCategoryId)";
         $st = $this->pdo->prepare($sql);
         $st->bindValue( ":publicationDate", (new \DateTime('NOW'))->format('Y-m-d H:i:s'), \PDO::PARAM_STMT);
         $st->bindValue( ":categoryId", $this->categoryId, \PDO::PARAM_INT );
@@ -81,11 +81,12 @@ class Article extends \ItForFree\SimpleMVC\mvc\Model
     public function update()
     {
         $sql = "UPDATE $this->tableName SET publicationDate=:publicationDate,"
-                . " categoryId=:categoryId, subCategory_id=:subCategoryId,"
+                . " categoryId=:categoryId, subCategoryId=:subCategoryId,"
                 . " title=:title, summary=:summary, content=:content,"
                 . " publicationStatus=:publicationStatus  WHERE id = :id";
         $st = $this->pdo->prepare($sql);
-        $st->bindValue( ":publicationDate", (new \DateTime('NOW'))->format('Y-m-d H:i:s'), \PDO::PARAM_STMT);
+        //$st->bindValue( ":publicationDate", (new \DateTime('NOW'))->format('Y-m-d H:i:s'), \PDO::PARAM_STMT);
+        $st->bindValue( ":publicationDate", $this->publicationDate);
         $st->bindValue( ":categoryId", $this->categoryId, \PDO::PARAM_INT );
         $st->bindValue( ":subCategoryId", $this->subCategoryId, \PDO::PARAM_INT );
         $st->bindValue( ":title", $this->title, \PDO::PARAM_STR );
@@ -104,9 +105,7 @@ class Article extends \ItForFree\SimpleMVC\mvc\Model
         $st = $this->pdo->prepare($sql);
         $st->bindValue( ":id", $id, \PDO::PARAM_INT );
         $st->execute();
-        $row = $st->fetch(\PDO::FETCH_NUM); 
-        
-        
+        $row = $st->fetch(\PDO::FETCH_NUM);
         
         if ($row) { 
             $categoryName = $row[0];
@@ -134,6 +133,38 @@ class Article extends \ItForFree\SimpleMVC\mvc\Model
         } else {
             return null;
         }
+    }
+    
+    /**
+    * Возвращает название всех категорий статей, и соответствующие им id
+    */
+    public function getAllCategoriesNameAndId()
+    {
+        $sql = "SELECT id, name FROM categories";
+        $st = $this->pdo->prepare($sql);
+        $st->execute();
+        $list = $st->fetchAll(\PDO::FETCH_ASSOC);
+
+        if (isset($list)) {
+            return $list;
+        }
+        return null;
+    }
+    
+    /**
+    * Возвращает название всех подкатегорий статей, и соответствующие им id
+    */
+    public function getAllSubCategoriesNameAndId()
+    {
+        $sql = "SELECT id, name FROM subCategories";
+        $st = $this->pdo->prepare($sql);
+        $st->execute();
+        $list = $st->fetchAll(\PDO::FETCH_ASSOC);
+
+        if (isset($list)) {
+            return $list;
+        }
+        return null;
     }
 }
 

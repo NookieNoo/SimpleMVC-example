@@ -7,7 +7,7 @@ $User = Config::getObject('core.user.class');
 <a href="#">
     <img id="logo" src="../../../images/logo.jpg" alt="Widget News">
 </a>
-
+<?php include('includes/admin-header.php'); ?>
 
 <h2><?= $editAdminusersTitle ?></h2>
 <form id="editUser" method="post" action="<?= $Url::link("admin/adminusers/edit&id=" . $_GET['id'])?>">

@@ -4,7 +4,10 @@ use ItForFree\SimpleMVC\Config;
 $Url = Config::getObject('core.url.class');
 ?>
 
-<?php include('includes/admin-users-nav.php'); ?>
+<a href="#">
+    <img id="logo" src="../../../images/logo.jpg" alt="Widget News">
+</a>
+<?php include('includes/admin-header.php'); ?>
 
 <h2><?= $deleteAdminusersTitle ?></h2>
 

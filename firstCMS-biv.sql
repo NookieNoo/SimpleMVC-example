@@ -103,3 +103,5 @@ CREATE TABLE IF NOT EXISTS `article_users` (
   CONSTRAINT `article_users` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`) ON DELETE CASCADE,
   CONSTRAINT `article_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) COLLATE='utf8_general_ci' ENGINE=InnoDB COMMENT='Таблица связи статей и пользователей';
+
+ALTER table users_article add foreign key (user_id) references users(id);

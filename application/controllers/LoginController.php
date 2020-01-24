@@ -15,12 +15,12 @@ class LoginController extends \ItForFree\SimpleMVC\mvc\Controller
      * @var string Название страницы
      */
     public $loginTitle = "Регистрация/Вход в систему";
-    
+    /*
     protected $rules = [ 
         ['allow' => true, 'roles' => ['?'], 'actions' => ['login']],
         ['allow' => true, 'roles' => ['@'], 'actions' => ['logout']],
     ];
-    
+    */
     /**
      * Вход в систему / Выводит на экран форму для входа в систему
      */
@@ -31,7 +31,11 @@ class LoginController extends \ItForFree\SimpleMVC\mvc\Controller
             $pass = $_POST['password'];
             $User = Config::getObject('core.user.class');
             if($User->login($login, $pass)) {
-                $this->redirect(Url::link("homepage/index"));
+                if($User->role == 'admin') {
+                    $this->redirect(Url::link("admin/adminusers/index"));
+                } else {
+                    $this->redirect(Url::link("homepage/index"));
+                }
             }
             else {
                 $this->redirect(Url::link("login/login&auth=deny"));
