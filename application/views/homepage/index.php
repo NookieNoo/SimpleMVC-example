@@ -38,14 +38,14 @@
                 <?php } ?>
                 
             </h2>
-            <p class="summary" id="<?php echo $article->id?>"><?php echo htmlspecialchars($article->summary)?></p>
+            <p class="summary" id="<?php echo $article->id?>"><?php echo htmlspecialchars(mb_substr($article->content, 0, 50).'...')?></p>
             <img id="loader-identity" src="JS/ajax-loader.gif" alt="gif">
             
             <ul class="ajax-load">
-                <li><a href=".?action=viewArticle&amp;articleId=<?php echo $article->id?>" class="ajaxArticleBodyByPost" data-contentId="<?php echo $article->id?>">Показать продолжение (POST)</a></li>
-                <li><a href=".?action=viewArticle&amp;articleId=<?php echo $article->id?>" class="ajaxArticleBodyByGet" data-contentId="<?php echo $article->id?>">Показать продолжение (GET)</a></li>
-                <li><a href=".?action=viewArticle&amp;articleId=<?php echo $article->id?>" class="newAjaxArticleBodyByPost" data-contentId="<?php echo $article->id?>">(POST) -- NEW</a></li>
-                <li><a href=".?action=viewArticle&amp;articleId=<?php echo $article->id?>" class="newAjaxArticleBodyByGet" data-contentId="<?php echo $article->id?>">(GET)  -- NEW</a></li>
+                <li><a href=".?route=articles/viewitem&amp;id=<?php echo $article->id?>" class="ajaxArticleBodyByPost" data-contentId="<?php echo $article->id?>">Показать продолжение (POST)</a></li>
+                <li><a href=".?route=articles/viewitem&amp;id=<?php echo $article->id?>" class="ajaxArticleBodyByGet" data-contentId="<?php echo $article->id?>">Показать продолжение (GET)</a></li>
+                <li><a href=".?route=articles/viewitem&amp;id=<?php echo $article->id?>" class="newAjaxArticleBodyByPost" data-contentId="<?php echo $article->id?>">(POST) -- NEW</a></li>
+                <li><a href=".?route=articles/viewitem&amp;id=<?php echo $article->id?>" class="newAjaxArticleBodyByGet" data-contentId="<?php echo $article->id?>">(GET)  -- NEW</a></li>
             </ul>
             <a href=".?route=articles/viewItem&amp;id=<?php echo $article->id?>" class="showContent" data-contentId="<?php echo $article->id?>">
                 Показать полностью

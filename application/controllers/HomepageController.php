@@ -51,5 +51,21 @@ class HomepageController extends \ItForFree\SimpleMVC\mvc\Controller
             $this->view->render('login/index.php');
         }
     }
+    
+    public function showmoreAction()
+    {
+        if (isset($_GET['articleId'])) {
+            $id = $_GET['articleId'];
+            $article = new Article;
+            $newArticle = $article->getById($id);
+            echo $newArticle->content;
+        }
+        if (isset($_POST['articleId'])) {
+            $id = $_POST['articleId'];
+            $article = new Article;
+            $newArticle = $article->getById($id);
+            echo json_encode($newArticle);
+        }
+    }
 }
 

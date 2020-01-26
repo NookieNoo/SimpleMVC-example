@@ -43,7 +43,7 @@ Class Subcategory extends \ItForFree\SimpleMVC\mvc\Model
     
     
     /**
-    * Обновляем текущий объект категории в базе данных
+    * Обновляем текущий объект подкатегории в базе данных
     */
     public function update()
     {
