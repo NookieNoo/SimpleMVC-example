@@ -1,5 +1,5 @@
 <?php
-//phpinfo();
+//phpinfo(); exit();
 require_once("autoload.php"); // автозагрузка классов
 
 $localConfig = require(__DIR__ . '/../application/config/web-local.php');

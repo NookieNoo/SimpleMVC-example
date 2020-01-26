@@ -1,7 +1,7 @@
 
-CREATE DATABASE IF NOT EXISTS `cmsToMVC-biv`
-USE `cmsToMVC-biv`;
-
+/*CREATE DATABASE IF NOT EXISTS `bivsite2`
+USE `bivsite2`;
+*/
 
 CREATE TABLE IF NOT EXISTS `articles` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `articles` (
 );
 
 
-INSERT INTO `articles` (`id`, `publicationDate`, `categoryId`, `title`, `summary`, `content`, `publicationStatus`, `subCategoryIarticlesd`) VALUES
+INSERT INTO `articles` (`id`, `publicationDate`, `categoryId`, `title`, `summary`, `content`, `publicationStatus`, `subCategoryId`) VALUES
 	(1, '2017-06-21', 1, 'Первопроходцы ', 'Это статья - первопроходец', 'Первопроходец - человек(или статья), проложивший новые пути, открывший новые земли', 1, 1),
 	(2, '2017-06-21', 1, 'Неведомые земли', 'Каждый человек хотя бы раз просыпался с утра с будоражащим чувством, что сегодня он не вернётся домой. ', 'Не так сложно отправиться в путь, как решиться на это. Лишь немногие посвятили свою жизнь познанию, изучению тайн нашей планеты. И ещё меньше тех, о ком мы знаем это наверняка. Но несмотря на это, они шли вперёд, и вклад их в общее дело велик. ', 1, 2),
 	(3, '2017-06-21', 1, 'Х. Колумб', 'Это итальянский мореплаватель, в 1492 году открывший для европейцев Америку, благодаря снаряжению экспедиций католическими королями.', 'Колумб первым из достоверно известных путешественников пересёк Атлантический океан в субтропической и тропической полосе северного полушария и первым из европейцев ходил в Карибском море и Саргассово море [2]. Он открыл и положил начало исследованию Южной и Центральной Америки, включая их континентальные части и близлежащие архипелаги — Большие Антильские (Куба, Гаити, Ямайка и Пуэрто-Рико), Малые Антильские (от Доминики до Виргинских островов, а также Тринидад) и Багамские острова.\r\n\r\nПервооткрывателем Америки Колумба можно назвать с оговорками, ведь ещё в Средние века на территории Северной Америки бывали европейцы в лице исландских викингов (см. Винланд). Но, поскольку за пределами Скандинавии сведений об этих походах не было, именно экспедиции Колумба впервые сделали сведения о землях на западе всеобщим достоянием и положили начало колонизации Америки европейцами.\r\n\r\nВсего Колумб совершил 4 плавания к Америке:\r\n\r\n    Первое плавание (3 августа 1492 — 15 марта 1493).\r\n    Второе плавание (25 сентября 1493 — 11 июня 1496).\r\n    Третье плавание (30 мая 1498 — 25 ноября 1500).\r\n    Четвёртое плавание (9 мая 1502 — 7 ноября 1504).\r\n', 1, 2),
@@ -88,20 +88,14 @@ CREATE TABLE `users` (
 	UNIQUE INDEX `login` (`login`)
 );
 
-INSERT INTO `users` (`id`, `username`, `password`, `activityStatus`) VALUES
-	(2, 'testUser', '1111', 1),
-	(4, 'max', '0000', 0),
-	(5, 'ilya', '1111', 1),
-	(6, 'mike', '1111', 1),
-	(7, 'jake', '0000', 0);
-
 
 CREATE TABLE IF NOT EXISTS `article_users` (
-  `article_id` smallint(5) NOT NULL COMMENT 'Ссылка на статью',
+  `article_id` smallint(5) UNSIGNED NOT NULL COMMENT 'Ссылка на статью',
   `user_id` smallint(6) NOT NULL COMMENT 'Ссылка на автора',
   PRIMARY KEY (`article_id`,`user_id`),
   CONSTRAINT `article_users` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`) ON DELETE CASCADE,
   CONSTRAINT `article_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) COLLATE='utf8_general_ci' ENGINE=InnoDB COMMENT='Таблица связи статей и пользователей';
 
-ALTER table users_article add foreign key (user_id) references users(id);
+ALTER table article_users add foreign key (user_id) references users(id);
+ALTER table article_users add foreign key (article_id) references articles(id);

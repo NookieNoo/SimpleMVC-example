@@ -3,7 +3,7 @@ use ItForFree\SimpleMVC\Config;
 
 $User = Config::getObject('core.user.class');
 ?>
-<a href="#">
+<a href="?route=homepage/">
     <img id="logo" src="../../../images/logo.jpg" alt="Widget News">
 </a>
 <?php include('includes/admin-header.php'); ?>

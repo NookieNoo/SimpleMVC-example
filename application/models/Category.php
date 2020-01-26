@@ -13,6 +13,11 @@ Class Category extends \ItForFree\SimpleMVC\mvc\Model
     public $tableName = 'categories';
     
     /**
+     * @var string Критерий сортировки строк таблицы
+     */
+    public $orderBy = 'name';
+    
+    /**
      * @var string название категории 
      */
     public $name;

@@ -4,7 +4,7 @@ use ItForFree\SimpleMVC\Config;
 $Url = Config::getObject('core.url.class');
 ?>
 
-<a href="#">
+<a href="?route=homepage/">
     <img id="logo" src="../../../images/logo.jpg" alt="Widget News">
 </a>
 <?php include('includes/admin-header.php'); ?>

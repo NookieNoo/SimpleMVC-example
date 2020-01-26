@@ -10,7 +10,7 @@ $User = Config::getObject('core.user.class');
     <?php include('includes/main/head.php'); ?>
     <body> 
         <div id="container">
-            <a href="#">
+            <a href="?route=homepage/">
                 <img id="logo" src="../../../images/logo.jpg" alt="Widget News">
             </a>
             <?= $CONTENT_DATA ?>
