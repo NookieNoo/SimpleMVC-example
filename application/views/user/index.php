@@ -8,7 +8,7 @@ $User = Config::getObject('core.user.class');
 </a>
 <?php include('includes/admin-header.php'); ?>
 
-<h2>Список пользователей</h2> 
+<h1>Список пользователей</h1> 
     
 <?php if (!empty($users)): ?>
 <table class="table">
@@ -19,21 +19,17 @@ $User = Config::getObject('core.user.class');
       <th scope="col">Дата регистрации</th>
       <th scope="col">Роль</th>
       <th scope="col">Статус активности</th>
-      <th scope="col"></th>
     </tr>
      </thead>
     <tbody>
     <?php foreach($users as $user): ?>
-        <tr>
+        <tr onclick="location='?route=admin/adminusers/edit&amp;id=<?php echo $user->id?>'">
             <td> <?= $user->login ?> </td>
             <td>  <?= $user->email ?> </td>
             <td>  <?= $user->timestamp ?> </td>
             <td>  <?= $user->role ?> </td>
             <td>
                 <input type="checkbox" disabled <?php if ($user->activityStatus) echo 'checked' ?>>
-            </td>
-            <td>
-                <?= $User->returnIfAllowed("admin/adminusers/edit", "<a href=" . \ItForFree\SimpleMVC\Url::link("admin/adminusers/edit&id=". $user->id). ">[Редактировать]</a>");?>
             </td>
         </tr>
     <?php endforeach; ?>

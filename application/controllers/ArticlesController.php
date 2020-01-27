@@ -1,6 +1,8 @@
 <?php
 namespace application\controllers;
 use \application\models\Article as Article;
+use \application\models\Category as Category;
+use \application\models\Subcategory as Subcategory;
 use ItForFree\SimpleMVC\Config;
 /*
  * 
@@ -41,10 +43,18 @@ class ArticlesController extends \ItForFree\SimpleMVC\mvc\Controller
     {
         $article = new Article();
         $articles = array();
-        $articles = $article->getList();
+        $articles = $article->getList(); //здесь массив объектов статей
+        
+        foreach ($articles['results'] as $articleItem){
+           $listCategoryName[] = $article->getCategoryNameById($articleItem->categoryId);
+           $listSubCategoryName[] = $article->getSubCategoryNameById($articleItem->subCategoryId);
+        }
+        
         
         $editListTitle = "Выбор статьи для редактирования";
         $this->view->addVar('editListTitle', $editListTitle);
+        $this->view->addVar('listCategoryName', $listCategoryName);
+        $this->view->addVar('listSubCategoryName', $listSubCategoryName);
         $this->view->addVar('totalRows', $articles['totalRows']);
         $this->view->addVar('articles', $articles); // передаём переменную по view
         $this->view->render('article/editList.php');
@@ -72,7 +82,6 @@ class ArticlesController extends \ItForFree\SimpleMVC\mvc\Controller
                 $this->redirect($Url::link("articles/editlist&id=$id"));
             } 
             elseif (!empty($_POST['cancel'])) {
-                
                 $this->redirect($Url::link("articles/editlist"));
             }
         }
@@ -82,10 +91,14 @@ class ArticlesController extends \ItForFree\SimpleMVC\mvc\Controller
 
             $categories = $article->getAllCategoriesNameAndId();
             $subCategories = $article->getAllSubCategoriesNameAndId(); 
+            
+            //$authors = $newArticle->getAuthors($id);
 
+            
             $this->view->addVar('categories', $categories);
             $this->view->addVar('subCategories', $subCategories);
             $this->view->addVar('article', $article);
+            //$this->view->addVar('authors', $authors);
             $this->view->addVar('editArticleTitle', 'Редактирование статьи');
             $this->view->render('article/edit.php');
         }   

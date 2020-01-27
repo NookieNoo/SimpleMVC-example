@@ -8,14 +8,14 @@ $User = Config::getObject('core.user.class');
 
 <?php //include('../includes/admin-header.php'); ?>
 <?php include('includes/admin-header.php'); ?>
-
+<?php $count=0; ?>
     <h1><?= $editListTitle ?></h1>
 
 
           <table>
             <tr>
               <th>Publication Date</th>
-              <th>Article</th>
+              <th>Article title</th>
               <th>Category</th>
               <th>SubCategory</th>
               <th>Publication Status</th>
@@ -31,8 +31,8 @@ $User = Config::getObject('core.user.class');
               <td>
              
                 <?php 
-                if(isset ($article->categoryId)) {
-                    echo $article->categoryId;                        
+                if(isset ($listCategoryName[$count])) {
+                    echo $listCategoryName[$count];                        
                 }
                 else {
                 echo "Без категории";
@@ -41,8 +41,8 @@ $User = Config::getObject('core.user.class');
               <td>
              
                 <?php 
-                if(isset ($article->subCategoryId)) {
-                    echo $article->subCategoryId;                        
+                if(isset ($listSubCategoryName[$count])) {
+                    echo $listSubCategoryName[$count];                        
                 }
                 else {
                 echo "Без подкатегории";
@@ -55,7 +55,7 @@ $User = Config::getObject('core.user.class');
 
             </tr>
 
-    <?php } ?>
+    <?php $count++; } ?>
 
           </table>
 

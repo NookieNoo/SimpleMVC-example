@@ -1,6 +1,7 @@
 <?php
 namespace application\controllers;
-use application\models\SubCategory as Subcategory;
+use application\models\Subcategory as Subcategory;
+use application\models\Category as Category;
 use ItForFree\SimpleMVC\Config;
 /*
  * 
@@ -17,7 +18,24 @@ class SubcategoriesController extends \ItForFree\SimpleMVC\mvc\Controller
         $list = array();
         $list = $subCategory->getList();
         
-        $this->view->addVar('subCategories', $list); // передаём переменную по view
+        $category = new Category;
+        $categoriesList = $category->getAllIdAndNames(); //массив с id и name категорий
+        
+        $list['categoryName']= array();
+        $count = 0;
+        foreach($list['results'] as $subCategory){
+            foreach($categoriesList as $categoryItem) {
+                if ($subCategory->categoryId == $categoryItem['id']) {
+                    $list['categoryName'][$count] = $categoryItem['name'];
+                    $count++;
+                    break;
+                }
+            }
+        }
+        
+        
+        $this->view->addVar('categoryNames', $list['categoryName']);
+        $this->view->addVar('subCategories', $list['results']); // передаём переменную по view
         $this->view->addVar('totalRows', $list['totalRows']);
         $this->view->addVar('editListTitle', 'Подкатегории статей');
         $this->view->render('subcategory/editList.php');

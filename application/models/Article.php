@@ -53,6 +53,16 @@ class Article extends \ItForFree\SimpleMVC\mvc\Model
     */
     public $publicationStatus = null;
     
+    /**
+    * @var string название категории.
+    */
+    public $categoryName = null;
+    
+    /**
+    * @var string название подкатегории.
+    */
+    public $subcategoryName = null;
+    
     
     /**
     * Вставляем текущий объект Article в базу данных, устанавливаем его ID.
@@ -165,6 +175,26 @@ class Article extends \ItForFree\SimpleMVC\mvc\Model
             return $list;
         }
         return null;
+    }
+    
+    /**
+     * Возвращает авторов статьи
+     */
+    public function getAuthors($id)
+    {
+        $sql =    "SELECT users.id, users.login FROM users_article"
+                . "LEFT JOIN users ON user_id = id"
+                . "WHERE article_id = :id  ";
+        $st = $this->pdo->prepare($sql);
+        $st->bindValue( ":id", $id, \PDO::PARAM_INT );
+        $st->execute();
+        $list = $st->fetchAll(\PDO::FETCH_NUM);
+
+        if (isset($list)) {
+            return $list;
+        }
+        return null;
+        
     }
 }
 

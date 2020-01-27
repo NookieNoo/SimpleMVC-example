@@ -18,6 +18,11 @@ Class Category extends \ItForFree\SimpleMVC\mvc\Model
     public $orderBy = 'name';
     
     /**
+     * @var string Критерий количества выбираемых строк
+     */
+    public $limit = 10000;
+    
+    /**
      * @var string название категории 
      */
     public $name;
@@ -54,5 +59,27 @@ Class Category extends \ItForFree\SimpleMVC\mvc\Model
         $st->bindValue( ":description", $this->description, \PDO::PARAM_STR );
         $st->bindValue( ":id", $this->id, \PDO::PARAM_INT );
         $st->execute();
+    }
+    
+    /**
+    * Выбрать только id и name из таблицы categories
+    */
+    public function getAllIdAndNames()
+    {
+        $sql = "SELECT id, name FROM $this->tableName
+                ORDER BY  $this->orderBy LIMIT :numRows";
+        
+        $modelClassName = static::class;
+      
+        $st = $this->pdo->prepare($sql);
+        $st->bindValue( ":numRows", $this->limit, \PDO::PARAM_INT );
+        $st->execute();
+        $list = array();
+        
+        
+        $list = $st->fetchAll(\PDO::FETCH_ASSOC);
+       
+
+        return ($list);  
     }
 }

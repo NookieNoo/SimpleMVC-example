@@ -8,10 +8,10 @@ $User = Config::getObject('core.user.class');
 <!DOCTYPE html>
 <html>
     <?php include('includes/main/head.php'); ?>
-    <body> 
+    <body>
         <div id="container">
-            <a href="?route=homepage/">
-                <img id="logo" src="../../../images/logo.jpg" alt="Widget News">
+            <a id="logoLink" href="?route=homepage/">
+                <img  src="/img/logo.jpg" id="logo" alt="Widget News">
             </a>
             <?= $CONTENT_DATA ?>
             <?php include('includes/main/footer.php'); ?>

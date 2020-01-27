@@ -7,7 +7,8 @@ $User = Config::getObject('core.user.class');
 
 
 <?php// include('../includes/admin-header.php'); ?>
-<?php include('/var/www/SimpleMVC-example/application/views/includes/admin-header.php'); ?>
+<?php// include('/var/www/SimpleMVC-example/application/views/includes/admin-header.php'); ?>
+<?php include('/var/www/simpleMVC-example-biv/SimpleMVC-example/application/views/includes/admin-header.php'); ?>
 
     <h1><?= $editListTitle ?></h1>  
 

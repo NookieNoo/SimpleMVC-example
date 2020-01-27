@@ -51,7 +51,9 @@ class HomepageController extends \ItForFree\SimpleMVC\mvc\Controller
             $this->view->render('login/index.php');
         }
     }
-    
+    /**
+     * Обработка ajax запросов с главной страницы
+     */
     public function showmoreAction()
     {
         if (isset($_GET['articleId'])) {

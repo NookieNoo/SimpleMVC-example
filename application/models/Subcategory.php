@@ -17,6 +17,7 @@ Class Subcategory extends \ItForFree\SimpleMVC\mvc\Model
      */
     public $orderBy = 'name';
     
+    
     /**
      * @var string название подкатегории 
      */
@@ -25,6 +26,10 @@ Class Subcategory extends \ItForFree\SimpleMVC\mvc\Model
      * @var int внешний ключ, ссылка на категорию, к которой относится эта подкатегория
      */
     public $categoryId;
+    /*
+     * @var string название категории
+     */
+    public $categoryName;
     
     
     /**
@@ -55,4 +60,6 @@ Class Subcategory extends \ItForFree\SimpleMVC\mvc\Model
         $st->bindValue( ":id", $this->id, \PDO::PARAM_INT );
         $st->execute();
     }
+    
+    
 }
