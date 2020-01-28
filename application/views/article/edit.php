@@ -26,8 +26,8 @@
         <?php } ?>
     </select><br>
     
-    <label for="authors">Авторы статьи</label>
-    <select name="authors[]" multiple>
+    <label for="authorsIds">Авторы статьи</label>
+    <select name="authorsIds[]" multiple>
         <?php foreach ($users as $user) { ?>
         <option value="<?= $user->id?>"
                 <?php foreach($article->authorsIds as $authorId) {

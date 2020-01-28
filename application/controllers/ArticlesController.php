@@ -66,7 +66,7 @@ class ArticlesController extends \ItForFree\SimpleMVC\mvc\Controller
     */
     public function editAction()
     {
-        $id = $_GET['id'];
+        $id = (isset($_GET['id'])) ? $_GET['id'] : null;
         $Url = Config::get('core.url.class');
         
         
@@ -77,26 +77,19 @@ class ArticlesController extends \ItForFree\SimpleMVC\mvc\Controller
                     $_POST['publicationStatus'] = 1;
                 }
                 else $_POST['publicationStatus'] = 0;
-                $newArticle = new Article;
-                $article = $newArticle->loadFromArray($_POST);
+                $article = new Article;
+                $article = $article->loadFromArray($_POST);
                 $article->update();
                 $article->deleteAuthors();
+                $article->insertAuthors();
                 
-                
-                
-                //$article
                 $this->redirect($Url::link("articles/editlist&id=$id"));
             } 
             elseif (!empty($_POST['cancel'])) {
                 $this->redirect($Url::link("articles/editlist"));
             }
         }
-        else {
-            /*
-            $newArticle = new Article();
-            $article = $newArticle->getById($id);
-            */
-            
+        else {            
             $article = new Article();
             $article = $article->getById($id);
             

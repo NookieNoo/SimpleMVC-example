@@ -115,6 +115,7 @@ class Article extends \ItForFree\SimpleMVC\mvc\Model
         $st->bindValue( ":id", $this->id, \PDO::PARAM_INT );
         $st->execute();
     }
+    
     /**
     * Возвращает название категории статьи, по id этой категории
     */
@@ -187,7 +188,8 @@ class Article extends \ItForFree\SimpleMVC\mvc\Model
     }
     
     /**
-     * Возвращает авторов статьи
+     * Выбирает из базы id и login авторов статьи и присваивает эти данные текущему
+     * объекту Article
      * @param int $id id необходимой статьи
      */
     public function setAuthors($id)
@@ -217,7 +219,16 @@ class Article extends \ItForFree\SimpleMVC\mvc\Model
         $st = $this->pdo->prepare($sql);
         $st->bindValue( ":id", $this->id, \PDO::PARAM_INT );
         $st->execute();
-        $list = $st->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    
+    public function insertAuthors(){
+        $sql = "INSERT INTO users_article (user_id, article_id) VALUES (:user_id, :article_id)";
+        $st = $this->pdo->prepare($sql);
+        foreach($this->authorsIds as $authorId){
+            $st->bindValue( ":user_id", $authorId, \PDO::PARAM_INT );
+            $st->bindValue( ":article_id", $this->id, \PDO::PARAM_INT );
+            $st->execute();
+        }
     }
 }
 
