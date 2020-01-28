@@ -3,6 +3,7 @@ namespace application\controllers;
 use \application\models\Article as Article;
 use \application\models\Category as Category;
 use \application\models\Subcategory as Subcategory;
+use \application\models\Adminusers as Adminusers;
 use ItForFree\SimpleMVC\Config;
 /*
  * 
@@ -79,6 +80,11 @@ class ArticlesController extends \ItForFree\SimpleMVC\mvc\Controller
                 $newArticle = new Article;
                 $article = $newArticle->loadFromArray($_POST);
                 $article->update();
+                $article->deleteAuthors();
+                
+                
+                
+                //$article
                 $this->redirect($Url::link("articles/editlist&id=$id"));
             } 
             elseif (!empty($_POST['cancel'])) {
@@ -86,19 +92,26 @@ class ArticlesController extends \ItForFree\SimpleMVC\mvc\Controller
             }
         }
         else {
+            /*
             $newArticle = new Article();
             $article = $newArticle->getById($id);
-
+            */
+            
+            $article = new Article();
+            $article = $article->getById($id);
+            
+            
             $categories = $article->getAllCategoriesNameAndId();
             $subCategories = $article->getAllSubCategoriesNameAndId(); 
+            $article->setAuthors($id);
+            $users = new Adminusers;
+            $users = $users->getList();
             
-            //$authors = $newArticle->getAuthors($id);
-
             
+            $this->view->addVar('users', $users['results']);
             $this->view->addVar('categories', $categories);
             $this->view->addVar('subCategories', $subCategories);
             $this->view->addVar('article', $article);
-            //$this->view->addVar('authors', $authors);
             $this->view->addVar('editArticleTitle', 'Редактирование статьи');
             $this->view->render('article/edit.php');
         }   

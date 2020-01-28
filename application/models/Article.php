@@ -63,6 +63,15 @@ class Article extends \ItForFree\SimpleMVC\mvc\Model
     */
     public $subcategoryName = null;
     
+    /**
+    * @var array список id авторов.
+    */
+    public $authorsIds = array();
+    
+    /**
+    * @var array список id авторов.
+    */
+    public $authorsLogins = array();
     
     /**
     * Вставляем текущий объект Article в базу данных, устанавливаем его ID.
@@ -179,22 +188,36 @@ class Article extends \ItForFree\SimpleMVC\mvc\Model
     
     /**
      * Возвращает авторов статьи
+     * @param int $id id необходимой статьи
      */
-    public function getAuthors($id)
+    public function setAuthors($id)
     {
         $sql =    "SELECT users.id, users.login FROM users_article"
-                . "LEFT JOIN users ON user_id = id"
-                . "WHERE article_id = :id  ";
+                . " LEFT JOIN users ON user_id = id"
+                . " WHERE article_id = :id  ";
         $st = $this->pdo->prepare($sql);
         $st->bindValue( ":id", $id, \PDO::PARAM_INT );
         $st->execute();
-        $list = $st->fetchAll(\PDO::FETCH_NUM);
-
-        if (isset($list)) {
-            return $list;
-        }
-        return null;
+        $list = $st->fetchAll(\PDO::FETCH_ASSOC);
         
+        
+        if (isset($list)) {
+            foreach ($list as $item){
+                $this->authorsIds[] = $item['id'];
+                $this->authorsLogins[] = $item['login'];
+            }
+        }
+    }
+    
+    /*
+     * Удаление авторов статьи
+     */
+    public function deleteAuthors(){
+        $sql = "DELETE FROM users_article WHERE article_id=:id";
+        $st = $this->pdo->prepare($sql);
+        $st->bindValue( ":id", $this->id, \PDO::PARAM_INT );
+        $st->execute();
+        $list = $st->fetchAll(\PDO::FETCH_ASSOC);
     }
 }
 

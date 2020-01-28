@@ -25,6 +25,23 @@
             </option>
         <?php } ?>
     </select><br>
+    
+    <label for="authors">Авторы статьи</label>
+    <select name="authors[]" multiple>
+        <?php foreach ($users as $user) { ?>
+        <option value="<?= $user->id?>"
+                <?php foreach($article->authorsIds as $authorId) {
+                    if ($authorId == $user->id) {
+                        echo 'selected';
+                        break;
+                    }
+                } ?>
+                >
+            <?= $user->login ?>
+        </option>
+        <?php } ?>
+    </select>
+    
     <label for="publicationDate">Дата публикации</label>
     <input type="date" name="publicationDate" value="<?=$article->publicationDate?>"><br>
     <label for="publicationStatus">Статус публикации</label>
