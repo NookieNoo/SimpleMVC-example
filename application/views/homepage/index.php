@@ -1,5 +1,4 @@
 <ul id="headlines">
-    
     <?php $count=0; foreach($articles['results'] as $article) { ?>
         <li class='<?php echo $article->id?>'>
             <h2>
@@ -15,7 +14,7 @@
                 <?php if (isset($listCategoryName[$count])) { ?>
                     <span class="category">
                         in 
-                        <a href=".?action=archive&amp;categoryId=<?php echo $listCategoryName[$count]?>">
+                        <a href=".?route=homepage/archive&amp;categoryId=<?php echo $article->categoryId?>">
                             <?php echo htmlspecialchars($listCategoryName[$count])?>
                         </a>
                     </span>
@@ -30,7 +29,7 @@
                 
                 <span class="category">
                      in 
-                    <a href=".?action=archiveSubCategories&amp;subCategory_id=<?php echo $listSubCategoryName[$count]?>">
+                    <a href=".?route=homepage/archive&amp;subCategoryId=<?php echo $article->subCategoryId?>">
                         <?php echo htmlspecialchars($listSubCategoryName[$count])?>
                     </a>
                 </span>

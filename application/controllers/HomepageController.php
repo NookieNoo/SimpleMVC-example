@@ -1,6 +1,8 @@
 <?php
 namespace application\controllers;
 use \application\models\Article as Article;
+use \application\models\Category as Category;
+use \application\models\Subcategory as Subcategory;
 class HomepageController extends \ItForFree\SimpleMVC\mvc\Controller
 {
     /**
@@ -68,6 +70,37 @@ class HomepageController extends \ItForFree\SimpleMVC\mvc\Controller
             $newArticle = $article->getById($id);
             echo json_encode($newArticle);
         }
+    }
+    
+    /*
+     * 
+     */
+    public function archiveAction() {
+        if (isset($_GET['categoryId'])) {
+            $categoryId = $_GET['categoryId'];
+            $category = new Category;
+            $category = $category->getById($categoryId);
+
+            $article = new Article;
+            $articleList = $article->getList("categoryId=$categoryId");
+            $this->view->addVar('category', $category);
+            $this->view->addVar('articles', $articleList['results']);
+            $this->view->addVar('totalRows', $articleList['totalRows']);
+            $this->view->render('homepage/categoryArchive.php');
+        }
+        elseif (isset($_GET['subCategoryId'])) {
+            $subCategoryId = $_GET['subCategoryId'];
+            $subCategory = new Subcategory;
+            $subCategory = $subCategory->getById($subCategoryId);
+
+            $article = new Article;
+            $articleList = $article->getList("subCategoryId=$subCategoryId");
+            $this->view->addVar('subCategory', $subCategory);
+            $this->view->addVar('articles', $articleList['results']);
+            $this->view->addVar('totalRows', $articleList['totalRows']);
+            $this->view->render('homepage/subcategoryArchive.php');
+        }
+        
     }
 }
 

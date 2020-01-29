@@ -74,6 +74,43 @@ class Article extends \ItForFree\SimpleMVC\mvc\Model
     public $authorsLogins = array();
     
     /**
+    * Возвращает все (или диапазон) объекты Article из базы данных
+    *
+    * @param int Optional Количество возвращаемых строк (по умолчанию = all)
+    * @param int Optional Вернуть статьи только из категории с указанным ID
+    * @param string Optional Столбц, по которому выполняется сортировка статей (по умолчанию = "publicationDate DESC")
+    * @return Array|false Двух элементный массив: results => массив объектов Article; totalRows => общее количество строк
+    */
+        
+    public function getList($where='', $numRows=1000000)  
+    {
+        if(!empty($where)) {
+            $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM $this->tableName"
+                    . " WHERE ".$where." ORDER BY  $this->orderBy LIMIT :numRows";
+        } else {
+            $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM $this->tableName
+                ORDER BY  $this->orderBy LIMIT :numRows";
+        }
+        
+        
+        $modelClassName = static::class;
+      
+        $st = $this->pdo->prepare($sql);
+        $st->bindValue( ":numRows", $numRows, \PDO::PARAM_INT );
+        $st->execute();
+        $list = array();
+        
+        while ($row = $st->fetch()) {
+            $example = new $modelClassName($row);
+            $list[] = $example;
+        }
+
+        $sql = "SELECT FOUND_ROWS() AS totalRows"; //  получаем число выбранных строк
+        $totalRows = $this->pdo->query($sql)->fetch();
+        return (array ("results" => $list, "totalRows" => $totalRows[0]));
+    }
+    
+    /**
     * Вставляем текущий объект Article в базу данных, устанавливаем его ID.
     */
     public function insert() 
