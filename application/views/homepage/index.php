@@ -3,7 +3,7 @@
         <li class='<?php echo $article->id?>'>
             <h2>
                 <span class="pubDate">
-                    <?php echo $article->publicationDate;
+                    <?php echo date('j F', strtotime($article->publicationDate));
                         // echo date('j F', $article->publicationDate)?>
                 </span>
                 

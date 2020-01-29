@@ -1,21 +1,26 @@
-<h2><?= $loginTitle ?></h2>
-
-<form method="post" action="<?= \ItForFree\SimpleMVC\Url::link('login/login')?>">
+<form method="post" action="<?= \ItForFree\SimpleMVC\Url::link('login/login')?>" style="width: 60%;">
     
     <?php 
     if (!empty($_GET['auth'])) {
         echo "Неверное имя пользователя или пароль";
     }
     ?>
-    <div class="form-group">
-        <label for="userName" >Введите имя пользователя</label>
-        <input type="text"  class="form-control" id="userName"  name="userName" >
+    
+    <ul>
+        <li>
+            <label for="userName" >Username</label>
+            <input type="text" placeholder="username" id="userName" required autofocus  name="userName" >  
+        </li>
+        <li>
+            <label for="password" >Password</label>
+            <input type="password" placeholder="password" name="password" id="userName" required name="userName" >
+        </li>
+    </ul>
+    
+    
+    
+    <div class="buttons">
+        <input type="submit" name="login" value="Войти">
     </div>
-    <div class="form-group">
-        <label for="password" >Введите пароль</label>
-        <input type="password" name="password"  class="form-control" id="userName"  name="userName" >
-    </div>
-    <input type="submit" class="btn btn-primary" name="login" value="Сохранить">
-   
 </form>
 

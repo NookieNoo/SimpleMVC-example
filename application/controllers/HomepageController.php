@@ -3,6 +3,7 @@ namespace application\controllers;
 use \application\models\Article as Article;
 use \application\models\Category as Category;
 use \application\models\Subcategory as Subcategory;
+
 class HomepageController extends \ItForFree\SimpleMVC\mvc\Controller
 {
     /**
@@ -73,7 +74,8 @@ class HomepageController extends \ItForFree\SimpleMVC\mvc\Controller
     }
     
     /*
-     * 
+     * Обработка переходов к архиву статей по нажатию на её категорию или подкатегорию
+     * Вернет все статьи, соответствующие необходимому categoryId или subCategoryId
      */
     public function archiveAction() {
         if (isset($_GET['categoryId'])) {
@@ -99,8 +101,7 @@ class HomepageController extends \ItForFree\SimpleMVC\mvc\Controller
             $this->view->addVar('articles', $articleList['results']);
             $this->view->addVar('totalRows', $articleList['totalRows']);
             $this->view->render('homepage/subcategoryArchive.php');
-        }
-        
+        }   
     }
 }
 

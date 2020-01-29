@@ -10,11 +10,11 @@ class AdminusersController extends \ItForFree\SimpleMVC\mvc\Controller
 {
     
     public $layoutPath = 'admin-main.php';
-    /*
+    
     protected $rules = [ //вариант 2:  здесь всё гибче, проще развивать в дальнешем
          ['allow' => true, 'roles' => ['admin']],
          ['allow' => false, 'roles' => ['?', '@']],
-    ];*/
+    ];
     
     public function indexAction()
     {

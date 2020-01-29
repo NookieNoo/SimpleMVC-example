@@ -1,5 +1,5 @@
-<a href="?route=homepage/">
-    <img id="logo" src="../../../images/logo.jpg" alt="Widget News">
+<a href="?route=homepage/" id="logoLink">
+    <img id="logo" src="/img/logo.jpg" alt="Widget News">
 </a>
 <?php include('includes/admin-header.php'); ?>
 
