@@ -10,6 +10,11 @@ use ItForFree\SimpleMVC\Config;
  */
 class ArticlesController extends \ItForFree\SimpleMVC\mvc\Controller
 {
+    protected $rules = [ //вариант 2:  здесь всё гибче, проще развивать в дальнешем
+         ['allow' => true, 'roles' => ['admin']],
+         ['allow' => false, 'roles' => ['?', '@']],
+    ];
+    
     public $layoutPath = 'main.php';
     /**
     *   Выводит список всех статей

@@ -15,12 +15,12 @@ class LoginController extends \ItForFree\SimpleMVC\mvc\Controller
      * @var string Название страницы
      */
     public $loginTitle = "Регистрация/Вход в систему";
-    /*
+    
     protected $rules = [ 
         ['allow' => true, 'roles' => ['?'], 'actions' => ['login']],
         ['allow' => true, 'roles' => ['@'], 'actions' => ['logout']],
     ];
-    */
+    
     /**
      * Вход в систему / Выводит на экран форму для входа в систему
      */

@@ -8,6 +8,11 @@ use ItForFree\SimpleMVC\Config;
  */
 class SubcategoriesController extends \ItForFree\SimpleMVC\mvc\Controller
 {
+    protected $rules = [ //вариант 2:  здесь всё гибче, проще развивать в дальнешем
+         ['allow' => true, 'roles' => ['admin']],
+         ['allow' => false, 'roles' => ['?', '@']],
+    ];
+    
     public $layoutPath = 'main.php';
     /**
     *   Выводит список всех подкатегорий
@@ -33,7 +38,8 @@ class SubcategoriesController extends \ItForFree\SimpleMVC\mvc\Controller
             }
         }
         
-        
+        var_dump($_SESSION);
+        var_dump(session_get_cookie_params());
         $this->view->addVar('categoryNames', $list['categoryName']);
         $this->view->addVar('subCategories', $list['results']); // передаём переменную по view
         $this->view->addVar('totalRows', $list['totalRows']);

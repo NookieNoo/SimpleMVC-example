@@ -27,7 +27,8 @@ $config = [
             'class' => \application\models\ExampleUser::class
         ],
         'session' => [
-            'class' => ItForFree\SimpleMVC\Session::class
+            'class' => ItForFree\SimpleMVC\Session::class,
+            'lifetime' => 5
         ]
     ]    
 ];
